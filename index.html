@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kana Reader</title>
+  <meta name="description" content="Latihan membaca Hiragana dan Katakana sedikit demi sedikit." />
+  <meta name="theme-color" content="#fafaf9" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } },
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen bg-stone-50 font-sans text-stone-900 antialiased">
+  <main class="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
+
+    <!-- ===== Halaman pengaturan ===== -->
+    <section id="view-setup" aria-labelledby="app-title">
+      <header class="mb-8">
+        <h1 id="app-title" class="text-2xl font-semibold tracking-tight">Kana Reader</h1>
+        <p class="mt-1 text-sm text-stone-500">Latihan membaca Hiragana &amp; Katakana, sedikit demi sedikit.</p>
+      </header>
+
+      <div class="space-y-8 pb-28">
+        <div class="space-y-3">
+          <h2 class="label">Latihan</h2>
+          <div class="segmented" data-setting="practice" role="group" aria-label="Jenis latihan"></div>
+          <p id="practice-hint" class="text-xs text-stone-400"></p>
+        </div>
+
+        <div class="space-y-3">
+          <h2 class="label">Aksara</h2>
+          <div class="segmented" data-setting="script" role="group" aria-label="Pilih aksara"></div>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-center justify-between gap-4">
+            <h2 class="label">Kelompok</h2>
+            <div class="flex gap-1 text-sm">
+              <button type="button" class="link-btn" data-action="select-all">Pilih semua</button>
+              <button type="button" class="link-btn" data-action="clear-groups">Kosongkan</button>
+            </div>
+          </div>
+          <div id="group-list" class="space-y-4"></div>
+          <div id="word-notice" hidden></div>
+        </div>
+
+        <div class="grid gap-8 sm:grid-cols-2">
+          <div id="mode-section" class="space-y-3">
+            <h2 class="label">Mode tampilan</h2>
+            <div class="segmented" data-setting="mode" role="group" aria-label="Mode tampilan"></div>
+            <p id="mode-hint" class="text-xs text-stone-400"></p>
+          </div>
+          <div class="space-y-3">
+            <h2 class="label">Jumlah</h2>
+            <div class="segmented" data-setting="count" role="group" aria-label="Jumlah"></div>
+            <p id="count-hint" class="text-xs text-stone-400"></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="start-bar">
+        <div class="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+          <p id="selection-summary" class="text-sm text-stone-500"></p>
+          <button type="button" id="start-btn" class="btn btn-primary" data-action="start">Mulai latihan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Halaman latihan ===== -->
+    <section id="view-practice" hidden aria-label="Latihan">
+      <div class="mb-6 flex items-center justify-between gap-2">
+        <button type="button" class="btn" data-action="back" aria-label="Kembali ke pemilihan kelompok">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          <span class="hidden sm:inline">Kelompok</span>
+        </button>
+        <p id="practice-title" class="hidden truncate text-sm text-stone-500 sm:block"></p>
+        <div class="flex gap-2">
+          <button type="button" id="romaji-btn" class="btn btn-toggle" data-action="toggle-romaji" aria-pressed="false">
+            <span class="jp text-xs" aria-hidden="true">Aa</span> Romaji
+          </button>
+          <button type="button" id="meaning-btn" class="btn btn-toggle" data-action="toggle-meaning" aria-pressed="false" hidden>
+            Arti
+          </button>
+          <button type="button" class="btn" data-action="shuffle">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+            Shuffle
+          </button>
+        </div>
+      </div>
+
+      <div id="practice-notice" class="mb-6" hidden></div>
+      <div id="practice-content" data-romaji="off" data-meaning="off"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <p style="padding:1rem;text-align:center">Kana Reader membutuhkan JavaScript.</p>
+  </noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

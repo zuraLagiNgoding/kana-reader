@@ -1,0 +1,211 @@
+/* Komponen kecil yang dipakai berulang. Utilitas layout memakai Tailwind.
+   Selektor "button.x" dipakai agar tidak tertimpa preflight Tailwind
+   ([type=button] { background-color: transparent }). */
+
+:root {
+  --ink: #1c1917;
+  --muted: #78716c;
+  --line: #e7e5e4;
+  --line-strong: #d6d3d1;
+  --surface: #ffffff;
+  --soft: #f0eeec;
+  --accent: #dc2626;
+}
+
+.jp {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', sans-serif;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+[hidden] { display: none !important; }
+
+/* ---------- Segmented control ---------- */
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--soft);
+}
+.segmented button {
+  padding: 0.5rem 0.9rem;
+  border-radius: 9px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.segmented button:hover { color: var(--ink); }
+.segmented button[aria-pressed='true'] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgb(28 25 23 / 0.1);
+}
+
+/* ---------- Kelompok (chip) ---------- */
+button.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0.25rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.chip:hover { border-color: var(--line-strong); }
+.chip-kana { font-size: 1.5rem; line-height: 1.2; }
+.chip-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; opacity: 0.6; }
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.chip[aria-pressed='true'] .chip-label { opacity: 0.75; }
+
+/* ---------- Tombol ---------- */
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+}
+.btn:hover:not(:disabled) { border-color: var(--line-strong); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-icon { width: 2.75rem; height: 2.75rem; padding: 0; border-radius: 999px; }
+button.btn-primary {
+  padding: 0.7rem 1.25rem;
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) { background: #000; }
+.btn-toggle[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+.link-btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  color: var(--muted);
+}
+.link-btn:hover { color: var(--ink); background: var(--soft); }
+
+/* ---------- Bar tombol mulai ---------- */
+.start-bar {
+  position: fixed;
+  inset: auto 0 0 0;
+  border-top: 1px solid var(--line);
+  background: rgb(250 250 249 / 0.92);
+  backdrop-filter: blur(8px);
+}
+
+/* ---------- Kartu Kana ---------- */
+button.kana-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s;
+}
+.kana-card:hover { border-color: var(--line-strong); box-shadow: 0 6px 18px -10px rgb(28 25 23 / 0.25); }
+.kana-card:active { transform: scale(0.97); }
+.kana-card .kana { line-height: 1; }
+.kana-card.is-playing {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgb(220 38 38 / 0.18);
+}
+
+.romaji {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+[data-romaji='off'] .romaji { visibility: hidden; }
+
+.meaning {
+  max-width: 100%;
+  padding: 0 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.2rem;
+  color: var(--ink);
+  text-align: center;
+}
+[data-meaning='off'] .meaning { visibility: hidden; }
+.word-card { gap: 0.5rem; }
+
+/* ---------- Notice & toast ---------- */
+.notice {
+  padding: 0.875rem 1rem;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  background: #fffbeb;
+  color: #78350f;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.notice-title { font-weight: 600; margin-bottom: 0.15rem; }
+button.notice-chip {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid #fcd34d;
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 500;
+}
+button.notice-chip:hover { background: #fef3c7; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  z-index: 50;
+  max-width: calc(100% - 2rem);
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.875rem;
+  transform: translate(-50%, 1rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+.fade-in { animation: fade-in 0.25s ease-out; }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
